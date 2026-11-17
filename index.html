@@ -294,6 +294,28 @@
   .btn-scuro:hover{background:var(--noce-2)}
   @media (max-width:640px){.banner-cookie{grid-template-columns:1fr}.banner-cookie .scelte .btn{flex:1}}
 
+  /* ---------- pulsante WhatsApp con orari ---------- */
+  .wa{position:fixed;right:clamp(.9rem,2.5vw,1.8rem);bottom:clamp(.9rem,2.5vw,1.8rem);z-index:55;display:flex;align-items:center;gap:.7rem;
+    background:#1FA855;color:#fff;text-decoration:none;font:600 1rem var(--sans);padding:.75rem 1.2rem .75rem .8rem;border-radius:40px;box-shadow:0 10px 26px rgba(20,80,40,.35)}
+  .wa:hover{background:#178F47}
+  .wa svg{width:34px;height:34px;flex:none}
+  .wa .tavola-chiuso{display:none}
+  .wa.chiuso{background:#7f8c84;box-shadow:0 8px 20px rgba(0,0,0,.25);cursor:not-allowed}
+  .wa.chiuso:hover{background:#7f8c84}
+  .wa.chiuso .tavola-chiuso{display:flex;position:absolute;left:-10px;right:-10px;top:50%;height:46px;margin-top:-23px;transform:rotate(-7deg);
+    align-items:center;justify-content:center;background:#C9A274 url(img/legno-telaio.jpg) center/cover;border-radius:3px;
+    box-shadow:0 6px 10px rgba(0,0,0,.35),inset 0 0 0 1px rgba(90,55,25,.4),inset 0 -3px 0 rgba(90,55,25,.25)}
+  .tavola-chiuso i{position:absolute;width:9px;height:9px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,#f4f4f4 0 18%,#a6abb0 35%,#5b6166 75%);box-shadow:1px 1px 1px rgba(0,0,0,.5)}
+  .tavola-chiuso i:nth-child(1){left:7px;top:6px}.tavola-chiuso i:nth-child(2){right:7px;top:6px}
+  .tavola-chiuso i:nth-child(3){left:7px;bottom:6px}.tavola-chiuso i:nth-child(4){right:7px;bottom:6px}
+  .tavola-chiuso b{font:900 1.55rem/1 Impact,"Arial Black",var(--sans);letter-spacing:.08em;color:#C4161C;transform:rotate(2deg) skewX(-4deg);
+    position:relative;text-shadow:1px 0 0 rgba(160,10,15,.9),-1px 1px 0 rgba(196,22,28,.55),1px 2px 0 rgba(150,8,12,.35),0 0 2px rgba(196,22,28,.4);opacity:.94}
+  .tavola-chiuso b::after{content:"";position:absolute;left:58%;top:78%;width:3px;height:9px;border-radius:0 0 3px 3px;background:#C4161C}
+  .wa-orari{position:absolute;right:0;bottom:calc(100% + 10px);white-space:nowrap;background:var(--noce);color:var(--bianco);font:500 .85rem var(--sans);padding:.45rem .7rem;border-radius:4px;opacity:0;transform:translateY(4px);transition:opacity .2s,transform .2s;pointer-events:none}
+  .wa.chiuso:hover .wa-orari,.wa.chiuso:focus .wa-orari,.wa.chiuso.mostra .wa-orari{opacity:1;transform:none}
+  @media (max-width:560px){.wa .wa-testo{display:none}.wa{padding:.7rem}.wa.chiuso .tavola-chiuso{left:-38px;right:-8px;height:40px;margin-top:-20px}.tavola-chiuso b{font-size:1.15rem}.wa-orari{white-space:normal;width:min(260px,80vw)}}
+
   /* ---------- chi siamo ---------- */
   .chi{background:var(--salvia);color:var(--bianco)}
   .chi .grid{display:grid;grid-template-columns:1.1fr 1fr;gap:4rem;align-items:start}
@@ -571,6 +593,13 @@
   </div>
 </div>
 
+<a class="wa" id="wa" href="https://wa.me/393296285002?text=Buongiorno%2C%20vorrei%20informazioni%20su%20un%20lavoro%20in%20legno." target="_blank" rel="noopener">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="#fff" d="M16 3C8.8 3 3 8.6 3 15.6c0 2.5.8 4.9 2.1 6.9L3.6 29l6.8-1.7c1.7.9 3.6 1.4 5.6 1.4 7.2 0 13-5.6 13-12.6S23.2 3 16 3z"/><path fill="#1FA855" d="M12.2 9.6c-.3-.6-.6-.6-.9-.6h-.8c-.3 0-.7.1-1 .5-.4.4-1.3 1.3-1.3 3.1s1.3 3.6 1.5 3.8c.2.3 2.6 4.1 6.4 5.6 3.2 1.2 3.8 1 4.5.9.7-.1 2.2-.9 2.5-1.8.3-.9.3-1.6.2-1.8-.1-.2-.3-.3-.7-.5l-2.4-1.2c-.3-.1-.6-.2-.8.2-.2.4-.9 1.2-1.1 1.4-.2.2-.4.3-.8.1-.4-.2-1.5-.6-2.9-1.8-1.1-1-1.8-2.1-2-2.5-.2-.4 0-.6.2-.8l.6-.7c.2-.2.3-.4.4-.7.1-.3.1-.5 0-.7l-1.2-2.8z"/></svg>
+  <span class="wa-testo">Scrivici su WhatsApp</span>
+  <span class="tavola-chiuso" aria-hidden="true"><i></i><i></i><i></i><i></i><b>CHIUSO</b></span>
+  <span class="wa-orari" role="status"></span>
+</a>
+
 <footer>
   <div class="wrap">
     <div class="grid">
@@ -715,6 +744,30 @@
     if(v==='si')caricaAnalytics(); else if(window.gaCaricato){cancellaCookieGA();location.reload()} else cancellaCookieGA();
   }));
   document.querySelectorAll('[data-preferenze-cookie]').forEach(b=>b.addEventListener('click',()=>{banner.hidden=false;banner.querySelector('button').focus()}));
+  // ---- WhatsApp attivo solo negli orari di apertura (ora italiana) ----
+  // Giorni: 1=lunedì … 5=venerdì. Fasce: 08:00–12:00 e 13:00–17:00.
+  const GIORNI_APERTI=[1,2,3,4,5], FASCE=[[8*60,12*60],[13*60,17*60]];
+  const wa=document.getElementById('wa'), waHref=wa.getAttribute('href'), waOrari=wa.querySelector('.wa-orari');
+  function oraItalia(){
+    const parti=new Intl.DateTimeFormat('it-IT',{timeZone:'Europe/Rome',weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(window.oraProva||new Date());
+    const g={dom:0,lun:1,mar:2,mer:3,gio:4,ven:5,sab:6}[parti.find(p=>p.type==='weekday').value.slice(0,3).toLowerCase()];
+    return {giorno:g,minuti:+parti.find(p=>p.type==='hour').value*60+ +parti.find(p=>p.type==='minute').value};
+  }
+  function prossimaApertura({giorno,minuti}){
+    const nomi=['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'];
+    if(GIORNI_APERTI.includes(giorno)){const f=FASCE.find(([a])=>minuti<a);if(f)return 'alle '+String(f[0]/60).padStart(2,'0')+':00';}
+    for(let i=1;i<=7;i++){const d=(giorno+i)%7;if(GIORNI_APERTI.includes(d))return (i===1?'domani':nomi[d])+' alle '+String(FASCE[0][0]/60).padStart(2,'0')+':00';}
+  }
+  function aggiornaWA(){
+    const t=oraItalia();
+    const aperto=GIORNI_APERTI.includes(t.giorno)&&FASCE.some(([a,b])=>t.minuti>=a&&t.minuti<b);
+    wa.classList.toggle('chiuso',!aperto);
+    if(aperto){wa.setAttribute('href',waHref);wa.removeAttribute('aria-disabled');wa.setAttribute('aria-label','Scrivici su WhatsApp');waOrari.textContent='';}
+    else{wa.removeAttribute('href');wa.setAttribute('aria-disabled','true');wa.setAttribute('tabindex','0');
+      const r='Siamo chiusi: WhatsApp riapre '+prossimaApertura(t)+'.';waOrari.textContent=r;wa.setAttribute('aria-label',r);}
+  }
+  wa.addEventListener('click',e=>{if(wa.classList.contains('chiuso')){e.preventDefault();wa.classList.add('mostra');setTimeout(()=>wa.classList.remove('mostra'),2500)}});
+  aggiornaWA(); setInterval(aggiornaWA,60000);
 </script>
 </body>
 </html>
