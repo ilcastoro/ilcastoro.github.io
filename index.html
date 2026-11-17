@@ -24,6 +24,7 @@
     --sans:"Work Sans", system-ui, sans-serif;
     /* venatura del legno, generata in SVG */
     --legno:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Cfilter id='v'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.09 0.004' numOctaves='4' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.25 0 0 0 0 0.15 0 0 0 0 0.08 0 0 0 2.2 -0.85'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23v)'/%3E%3C/svg%3E");
+    --legno-chiaro:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='600'%3E%3Cfilter id='v'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.12 0.006' numOctaves='4' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.36 0 0 0 0 0.18 0 0 0 1.6 -0.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23v)'/%3E%3C/svg%3E");
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -54,7 +55,7 @@
   .tag{display:inline-block;margin-top:1.3rem;background:var(--metro);color:var(--noce);font:600 clamp(1.3rem,2.6vw,1.9rem)/1.1 var(--sans);padding:.35rem 1rem}
   .hero p.sub{font-size:clamp(1.05rem,1.8vw,1.25rem);max-width:36ch;margin-top:1.3rem;color:#efe6d9}
   .cta{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2rem}
-  .btn{display:inline-block;text-decoration:none;font-weight:600;padding:.85rem 1.4rem;border-radius:3px}
+  .btn{display:inline-block;border:0;font-family:inherit;font-size:1rem;cursor:pointer;text-decoration:none;font-weight:600;padding:.85rem 1.4rem;border-radius:3px}
   .btn-metro{background:var(--metro);color:var(--noce)}
   .btn-metro:hover{background:#ffd73d}
   .btn-line{border:1.5px solid rgba(255,255,255,.7)}
@@ -88,16 +89,39 @@
   .piedi i{width:34px;height:14px;background:var(--telaio-scuro);border-radius:0 0 6px 6px}
 
   .vano{position:relative;min-height:500px;perspective:1600px;border:4px solid var(--telaio);display:flex}
-  .interno{position:relative;flex:1;min-width:0;padding:1.6rem 1.3rem;display:flex;flex-direction:column;overflow-wrap:break-word;
-    background:linear-gradient(180deg,rgba(0,0,0,.18),transparent 30%),#E3C9A2;
-    background-image:linear-gradient(180deg,rgba(60,35,15,.22),transparent 25%),linear-gradient(90deg,rgba(60,35,15,.15),transparent 12%,transparent 88%,rgba(60,35,15,.15));
-    box-shadow:inset 0 0 0 1px rgba(46,33,25,.25)}
+  /* interno: schienale in legno chiaro, fianchi in ombra, ripiano di base */
+  .interno{position:relative;flex:1;min-width:0;padding:2rem 1.3rem 2.2rem;display:flex;flex-direction:column;overflow-wrap:break-word;
+    background:
+      linear-gradient(0deg,#B98C5C 0 6px,#D9B583 6px 16px,transparent 16px),
+      linear-gradient(180deg,rgba(50,28,12,.45),rgba(50,28,12,0) 70px),
+      linear-gradient(90deg,rgba(50,28,12,.32),rgba(50,28,12,0) 26px,rgba(50,28,12,0) calc(100% - 26px),rgba(50,28,12,.32)),
+      var(--legno-chiaro),
+      #E4C9A0;
+    background-size:auto,auto,auto,300px 600px,auto;
+    box-shadow:inset 0 0 0 1px rgba(46,33,25,.35);
+    filter:brightness(.42) saturate(.8);transition:filter .5s ease .45s}
+  .interno > *{position:relative;z-index:2}
+  /* striscia LED sotto il cielo dell'armadio */
+  .interno::before{content:"";position:absolute;z-index:3;top:8px;left:12px;right:12px;height:5px;border-radius:3px;
+    background:#7d6a55;transition:background .3s ease .45s,box-shadow .3s ease .45s}
+  /* fascio di luce */
+  .interno::after{content:"";position:absolute;z-index:1;inset:0;pointer-events:none;
+    background:radial-gradient(120% 70% at 50% 0%,rgba(255,236,190,.75),rgba(255,236,190,.25) 45%,transparent 75%);
+    opacity:0;transition:opacity .6s ease .5s}
+  .vano.aperta .interno{filter:none}
+  .vano.aperta .interno::before{background:#fffbea;box-shadow:0 0 6px 2px #fff3c8,0 0 22px 6px rgba(255,226,150,.85),0 10px 40px 10px rgba(255,220,140,.45)}
+  .vano.aperta .interno::after{opacity:1}
+
+  /* il resto del sito si scurisce */
+  .buio{position:fixed;inset:0;z-index:40;background:rgba(18,11,6,.78);opacity:0;pointer-events:none;transition:opacity .6s ease}
+  body.luci-spente .buio{opacity:1;pointer-events:auto}
+  .armadi,.apri-tutte{position:relative;z-index:41}
   .interno h3{font-family:var(--serif);font-weight:800;font-size:1.5rem;line-height:1.15;margin-bottom:.6rem}
   .interno p{font-size:.98rem;color:#3b2c21}
   .interno ul{list-style:none;margin-top:.8rem;font-size:.95rem}
-  .interno li{padding:.45rem 0;border-bottom:4px solid #C9A577;box-shadow:0 3px 0 rgba(46,33,25,.15)}
+  .interno li{padding:.5rem 0 .4rem;border-bottom:9px solid #D6B07C;box-shadow:0 1px 0 #A97E4D,0 12px 10px -6px rgba(50,28,12,.35)}
   .interno .icona{width:54px;height:54px;margin-bottom:1rem}
-  .interno a.btn{margin-top:auto;align-self:flex-start;font-size:.92rem;padding:.6rem 1rem}
+  .interno .btn{margin-top:auto;align-self:flex-start;font-size:.92rem;padding:.6rem 1rem}
 
   .anta{position:absolute;inset:0;z-index:2;width:100%;border:0;cursor:pointer;font:inherit;color:var(--bianco);
     transform-style:preserve-3d;transition:transform .9s cubic-bezier(.25,.8,.3,1);
@@ -125,9 +149,35 @@
 
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
+    .interno,.interno::before,.interno::after,.buio{transition:none}
     .anta{transition:opacity .2s}
     .vano.aperta .anta{transform:none!important;opacity:0;pointer-events:none}
   }
+
+  /* ---------- finestra richiesta preventivo ---------- */
+  dialog.prev{border:0;padding:0;width:min(640px,100% - 2rem);max-height:calc(100% - 2rem);margin:auto;border-radius:6px;background:var(--bianco);color:var(--noce);box-shadow:0 30px 80px rgba(0,0,0,.45)}
+  dialog.prev::backdrop{background:rgba(18,11,6,.7)}
+  .prev-testa{background:var(--telaio);color:var(--bianco);padding:1.4rem 1.6rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;border-bottom:6px solid var(--metro)}
+  .prev-testa h2{font-size:1.6rem;max-width:none}
+  .chiudi{background:none;border:1.5px solid rgba(255,255,255,.6);color:inherit;font:600 .9rem var(--sans);padding:.4rem .8rem;border-radius:3px;cursor:pointer}
+  .prev form{padding:1.5rem 1.6rem 1.8rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.1rem}
+  .prev .campo{display:flex;flex-direction:column;gap:.3rem}
+  .prev .largo{grid-column:1/-1}
+  .prev label{font-weight:600;font-size:.92rem}
+  .prev input,.prev textarea{font:inherit;font-size:1rem;padding:.65rem .75rem;border:1.5px solid #b9a894;border-radius:3px;background:#fff;color:var(--noce);width:100%}
+  .prev input:focus,.prev textarea:focus{outline:3px solid var(--metro);outline-offset:0;border-color:var(--telaio)}
+  .prev textarea{min-height:130px;resize:vertical}
+  .prev .consenso{flex-direction:row;align-items:flex-start;gap:.6rem;font-size:.9rem}
+  .prev .consenso input{width:auto;margin-top:.25rem}
+  .prev .consenso label{font-weight:400}
+  .prev .obbl{font-size:.82rem;color:#6b5a4b}
+  .prev .azioni{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+  .prev .azioni .btn{font-size:1.05rem;padding:.85rem 2.2rem}
+  .prev .esito{font-weight:600}
+  .prev .esito.ok{color:#2f6b2f}
+  .prev .esito.ko{color:#a3271b}
+  .nascosto{position:absolute;left:-9999px}
+  @media (max-width:560px){.prev form{grid-template-columns:1fr}.prev-testa h2{font-size:1.3rem}}
 
   /* ---------- chi siamo ---------- */
   .chi{background:var(--salvia);color:var(--bianco)}
@@ -178,8 +228,7 @@
     .interno p{font-size:.86rem;line-height:1.45}
     .interno ul{display:none}
     .interno .icona{width:30px;height:30px;margin-bottom:.4rem}
-    .interno a.btn{margin-top:1rem}
-    .interno a.btn{align-self:stretch;text-align:center;font-size:.8rem;padding:.55rem .4rem}
+    .interno .btn{margin-top:1rem;align-self:stretch;text-align:center;font-size:.8rem;padding:.55rem .4rem}
     .etichetta{font-size:.95rem;padding:.45rem .6rem}
     .faccia::before{inset:16px 14px}
   }
@@ -212,7 +261,7 @@
         <span class="tag">Falegnameria</span>
         <p class="sub">Arredamenti, mobili, scale e interni in legno, a Toscanella di Dozza (BO).</p>
         <div class="cta">
-          <a class="btn btn-metro" href="#contatti">Chiedi un preventivo</a>
+          <button class="btn btn-metro" type="button" data-preventivo>Chiedi un preventivo</button>
           <a class="btn btn-line" href="#servizi">Apri l'armadio dei servizi</a>
         </div>
       </div>
@@ -244,7 +293,7 @@
               <h3>Arredamenti</h3>
               <p><span class="dc">Arredo completo per case, negozi e uffici: progettiamo e realizziamo gli ambienti su misura.</span></p>
               <ul><li><span class="dc">Abitazioni</span></li><li><span class="dc">Negozi e uffici</span></li></ul>
-              <a class="btn btn-metro" href="#contatti">Preventivo</a>
+              <button class="btn btn-metro" type="button" data-preventivo>Preventivo</button>
             </div>
             <button class="anta" type="button" aria-expanded="false" aria-controls="s1">
               <span class="faccia"><span class="maniglia"></span><span class="etichetta">Arredamenti<small>Apri l'anta</small></span></span>
@@ -258,7 +307,7 @@
               <h3>Mobili su misura</h3>
               <p><span class="dc">Mobili costruiti per i vostri spazi: cucine, armadi, librerie, tavoli.</span></p>
               <ul><li><span class="dc">Cucine</span></li><li><span class="dc">Armadi e cabine</span></li><li><span class="dc">Librerie e tavoli</span></li></ul>
-              <a class="btn btn-metro" href="#contatti">Preventivo</a>
+              <button class="btn btn-metro" type="button" data-preventivo>Preventivo</button>
             </div>
             <button class="anta" type="button" aria-expanded="false" aria-controls="s2">
               <span class="faccia"><span class="maniglia"></span><span class="etichetta">Mobili<small>Apri l'anta</small></span></span>
@@ -280,7 +329,7 @@
               <h3>Scale</h3>
               <p><span class="dc">Scale in legno per interni, dritte o a chiocciola, e rivestimenti di scale esistenti.</span></p>
               <ul><li><span class="dc">Scale su misura</span></li><li><span class="dc">Rivestimento gradini</span></li></ul>
-              <a class="btn btn-metro" href="#contatti">Preventivo</a>
+              <button class="btn btn-metro" type="button" data-preventivo>Preventivo</button>
             </div>
             <button class="anta" type="button" aria-expanded="false" aria-controls="s3">
               <span class="faccia"><span class="maniglia"></span><span class="etichetta">Scale<small>Apri l'anta</small></span></span>
@@ -294,7 +343,7 @@
               <h3>Interni</h3>
               <p><span class="dc">Porte, boiserie, pavimenti e rivestimenti in legno per completare gli interni.</span></p>
               <ul><li><span class="dc">Porte interne</span></li><li><span class="dc">Boiserie e pareti</span></li></ul>
-              <a class="btn btn-metro" href="#contatti">Preventivo</a>
+              <button class="btn btn-metro" type="button" data-preventivo>Preventivo</button>
             </div>
             <button class="anta" type="button" aria-expanded="false" aria-controls="s4">
               <span class="faccia"><span class="maniglia"></span><span class="etichetta">Interni<small>Apri l'anta</small></span></span>
@@ -320,7 +369,7 @@
       <dl>
         <dt>Sede</dt><dd>Via Meluzza 58, Toscanella, 40060 Dozza (BO)</dd>
         <dt>Attiva dal</dt><dd><span class="dc">anno</span></dd>
-        <dt>Zona servita</dt><dd><span class="dc">es. Imola, Bologna e provincia</span></dd>
+        <dt>Zona servita</dt><dd>Emilia-Romagna</dd>
       </dl>
     </div>
   </section>
@@ -331,13 +380,14 @@
       <div class="grid">
         <div class="scheda">
           <h3>Telefono</h3>
-          <p><a class="grande" href="tel:+390000000000"><span class="dc">+39 000 000 0000</span></a></p>
+          <p><a class="grande" href="tel:+393296285002">329 628 5002</a></p>
           <h3>Email</h3>
-          <p><a href="mailto:info@esempio.it"><span class="dc">info@esempio.it</span></a></p>
+          <p><a href="mailto:ilcastorosrl@libero.it">ilcastorosrl@libero.it</a></p>
           <h3>Indirizzo</h3>
           <address>Il Castoro S.r.l.<br>Via Meluzza 58, Frazione Toscanella<br>40060 Dozza (BO)</address>
           <h3>Orari</h3>
-          <p><span class="dc">Lun–Ven 8:00–12:00 / 13:30–17:30</span></p>
+          <p>08:00–12:00 e 13:00–17:00</p>
+          <p style="margin-top:1.4rem"><button class="btn btn-metro" type="button" data-preventivo>Chiedi un preventivo</button></p>
         </div>
         <div class="mappa">
           <iframe title="Mappa: Via Meluzza 58, Toscanella di Dozza" loading="lazy"
@@ -348,6 +398,28 @@
   </section>
 </main>
 
+<div class="buio" aria-hidden="true"></div>
+
+<dialog class="prev" id="preventivo" aria-labelledby="t-prev">
+  <div class="prev-testa">
+    <h2 id="t-prev">Richiesta di preventivo</h2>
+    <button class="chiudi" type="button" data-chiudi>Chiudi</button>
+  </div>
+  <form id="form-preventivo" novalidate>
+    <div class="campo"><label for="f-nome">Nome *</label><input id="f-nome" name="Nome" autocomplete="given-name" required></div>
+    <div class="campo"><label for="f-cognome">Cognome *</label><input id="f-cognome" name="Cognome" autocomplete="family-name" required></div>
+    <div class="campo"><label for="f-email">Email *</label><input id="f-email" name="Email" type="email" autocomplete="email" required></div>
+    <div class="campo"><label for="f-tel">Telefono</label><input id="f-tel" name="Telefono" type="tel" autocomplete="tel"></div>
+    <div class="campo"><label for="f-indirizzo">Indirizzo *</label><input id="f-indirizzo" name="Indirizzo" autocomplete="street-address" required></div>
+    <div class="campo"><label for="f-citta">Città *</label><input id="f-citta" name="Città" autocomplete="address-level2" required></div>
+    <div class="campo largo"><label for="f-richiesta">Richiesta *</label><textarea id="f-richiesta" name="Richiesta" placeholder="Descrivi il lavoro: cosa ti serve, misure indicative, tempi…" required></textarea></div>
+    <input class="nascosto" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="campo consenso largo"><input id="f-privacy" type="checkbox" required><label for="f-privacy">Ho letto l'<a href="#"><span class="dc">informativa privacy</span></a> e acconsento al trattamento dei dati per ricevere il preventivo. *</label></div>
+    <p class="obbl largo">I campi con * sono obbligatori.</p>
+    <div class="azioni largo"><button class="btn btn-metro" type="submit">Invia</button><p class="esito" role="status" aria-live="polite"></p></div>
+  </form>
+</dialog>
+
 <footer>
   <div class="wrap">
     <div class="grid">
@@ -355,7 +427,7 @@
         <img src="img/scritta-bianca.png" alt="Il Castoro S.r.l.">
         <p>Falegnameria a Toscanella di Dozza (BO)</p>
       </div>
-      <div><p>Via Meluzza 58, Frazione Toscanella<br>40060 Dozza (BO)<br><span class="dc">telefono</span></p></div>
+      <div><p>Via Meluzza 58, Frazione Toscanella<br>40060 Dozza (BO)<br><a href="tel:+393296285002">329 628 5002</a><br><a href="mailto:ilcastorosrl@libero.it">ilcastorosrl@libero.it</a></p></div>
       <div><p><a href="#servizi">Servizi</a><br><a href="#chi-siamo">Chi siamo</a><br><a href="#contatti">Contatti</a></p></div>
     </div>
     <div class="legale">
@@ -392,11 +464,57 @@
     tutte.textContent=tutteAperte?'Chiudi tutte le ante':'Apri tutte le ante';
     tutte.setAttribute('aria-pressed',tutteAperte);
   }
-  vani.forEach(v=>v.querySelector('.anta').addEventListener('click',()=>{imposta(v,!v.classList.contains('aperta'));aggiornaTutte()}));
+  function aggiornaBuio(){
+    document.body.classList.toggle('luci-spente',vani.some(v=>v.classList.contains('aperta')));
+  }
+  function chiudiTutte(){vani.forEach(v=>imposta(v,false));aggiornaTutte();aggiornaBuio()}
+  vani.forEach(v=>v.querySelector('.anta').addEventListener('click',()=>{imposta(v,!v.classList.contains('aperta'));aggiornaTutte();aggiornaBuio()}));
+  document.querySelector('.buio').addEventListener('click',chiudiTutte);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dlg.open)chiudiTutte()});
   tutte.addEventListener('click',()=>{
     const apri=!vani.every(v=>v.classList.contains('aperta'));
     vani.forEach((v,i)=>setTimeout(()=>imposta(v,apri),i*140));
-    setTimeout(aggiornaTutte,vani.length*140);
+    setTimeout(()=>{aggiornaTutte();aggiornaBuio()},vani.length*140);
+  });
+
+  // finestra richiesta preventivo
+  // L'invio passa da FormSubmit (formsubmit.co), servizio gratuito che inoltra il modulo via email.
+  const DESTINATARIO='ilcastorosrl@libero.it';
+  const dlg=document.getElementById('preventivo');
+  const form=document.getElementById('form-preventivo');
+  const esito=form.querySelector('.esito');
+  const invia=form.querySelector('[type=submit]');
+  document.querySelectorAll('[data-preventivo]').forEach(b=>b.addEventListener('click',()=>{
+    esito.textContent='';esito.className='esito';
+    dlg.showModal();form.querySelector('input').focus();
+  }));
+  dlg.querySelector('[data-chiudi]').addEventListener('click',()=>dlg.close());
+  dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const nonValido=[...form.querySelectorAll('[required]')].find(c=>!c.checkValidity());
+    if(nonValido){
+      esito.className='esito ko';
+      esito.textContent=nonValido.type==='checkbox'?'Per inviare la richiesta serve il consenso al trattamento dei dati.':nonValido.type==='email'&&nonValido.value?'Controlla l\'indirizzo email.':'Compila tutti i campi obbligatori.';
+      nonValido.focus();return;
+    }
+    const dati=Object.fromEntries(new FormData(form));
+    if(dati._honey)return;
+    dati._subject='Richiesta di preventivo dal sito – '+dati.Nome+' '+dati.Cognome;
+    dati._template='table';
+    dati._replyto=dati.Email;
+    invia.disabled=true;esito.className='esito';esito.textContent='Invio in corso…';
+    try{
+      const r=await fetch('https://formsubmit.co/ajax/'+DESTINATARIO,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(dati)});
+      const j=await r.json().catch(()=>({}));
+      if(!r.ok||String(j.success)!=='true')throw new Error(j.message||r.status);
+      form.reset();
+      esito.className='esito ok';esito.textContent='Richiesta inviata. Ti risponderemo il prima possibile.';
+    }catch(err){
+      esito.className='esito ko';
+      esito.textContent='Invio non riuscito. Riprova tra poco oppure scrivi a '+DESTINATARIO+'.';
+    }finally{invia.disabled=false}
   });
 </script>
 </body>
