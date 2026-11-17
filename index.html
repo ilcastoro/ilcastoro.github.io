@@ -94,8 +94,8 @@
   :root{
     --noce:#2E2119;
     --noce-2:#4A3426;
-    --telaio:#9C7049;     /* noce medio per armadi e fondi */
-    --telaio-scuro:#7A5434;
+    --telaio:#C29A6E;     /* noce medio per armadi e fondi */
+    --telaio-scuro:#A57B52;
     --rovere:#B98A55;
     --cenere:#ECEAE4;
     --salvia:#5E6B57;
@@ -118,30 +118,47 @@
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
   /* ---------- intestazione ---------- */
-  header.top{position:absolute;inset:0 0 auto 0;z-index:10;color:var(--bianco)}
-  header.top .wrap{display:flex;justify-content:space-between;align-items:center;padding-block:1.2rem}
-  .logo{display:flex;align-items:center;gap:.7rem;text-decoration:none}
-  .logo .testa{width:46px;height:46px;border-radius:50%;background:var(--cenere) url(img/castoro.png) no-repeat 38% 6%/150% auto;border:2px solid var(--metro)}
-  .logo img{height:26px;width:auto}
-  nav ul{list-style:none;display:flex;gap:1.6rem}
-  nav a{text-decoration:none;font-weight:500;font-size:.98rem;padding-block:.3rem;border-bottom:2px solid transparent}
-  nav a:hover{border-color:var(--metro)}
-  .menu-btn{display:none;background:none;border:1px solid rgba(255,255,255,.5);color:inherit;font:inherit;padding:.35rem .8rem;border-radius:4px;cursor:pointer}
+  header.top{position:absolute;inset:0 0 auto 0;z-index:10;color:var(--noce)}
+  header.top .barra{display:flex;justify-content:space-between;align-items:center;gap:2rem;padding:1.3rem clamp(1.25rem,3.5vw,3.5rem)}
+  .logo{display:flex;align-items:center;gap:.9rem;text-decoration:none}
+  .logo .testa{width:64px;height:64px;border-radius:50%;background:var(--bianco) url(img/castoro.png) no-repeat 38% 6%/150% auto;border:3px solid var(--metro);box-shadow:0 3px 10px rgba(80,50,20,.2)}
+  .logo img{height:38px;width:auto}
+  .destra{display:flex;align-items:center;gap:2.2rem}
+  nav ul{list-style:none;display:flex;gap:.6rem}
+  nav a{display:block;text-decoration:none;font-weight:600;font-size:1.12rem;padding:.6rem 1.1rem;border-radius:4px;background:rgba(251,250,247,.72);border:1.5px solid rgba(122,84,52,.25)}
+  nav a:hover{background:var(--metro);border-color:var(--metro)}
+  .burger{width:54px;height:54px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;background:var(--noce);border:0;border-radius:6px;cursor:pointer}
+  .burger span{display:block;width:26px;height:3px;border-radius:2px;background:var(--bianco);transition:transform .3s,opacity .3s}
+  .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+  .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+  /* pannello del menu */
+  .pannello{position:fixed;top:0;right:0;bottom:0;z-index:70;width:min(380px,88vw);background:var(--bianco);box-shadow:-20px 0 60px rgba(60,35,15,.25);
+    transform:translateX(105%);transition:transform .4s cubic-bezier(.25,.8,.3,1);display:flex;flex-direction:column;padding:1.4rem 1.8rem 2rem;overflow-y:auto;visibility:hidden}
+  .pannello.aperto{transform:none;visibility:visible}
+  .pannello .chiudi-p{align-self:flex-end;width:48px;height:48px;border:0;border-radius:6px;background:var(--noce);color:var(--bianco);font-size:1.6rem;line-height:1;cursor:pointer}
+  .pannello ul{list-style:none;margin-top:1.4rem;border-top:1px solid #e1d8cb}
+  .pannello li a{display:block;padding:1rem 0;font:600 1.35rem var(--serif);text-decoration:none;border-bottom:1px solid #e1d8cb}
+  .pannello li a:hover{color:var(--telaio-scuro)}
+  .pannello .btn{margin-top:1.6rem;text-align:center}
+  .pannello .rec{margin-top:1.4rem;font-size:.98rem;line-height:1.8}
+  .velo{position:fixed;inset:0;z-index:65;background:rgba(40,25,12,.45);opacity:0;pointer-events:none;transition:opacity .3s}
+  .velo.attivo{opacity:1;pointer-events:auto}
 
   /* ---------- apertura ---------- */
-  .hero{position:relative;min-height:88vh;display:flex;align-items:center;color:var(--bianco);background:#C29A6E url(img/legno-fondo.jpg) center/cover;overflow:hidden;padding:7rem 0 5rem}
-  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(78,50,29,.78) 0%,rgba(78,50,29,.45) 50%,rgba(78,50,29,.05) 100%)}
+  .hero{position:relative;min-height:88vh;display:flex;align-items:center;color:var(--noce);background:#E2C8A2 url(img/legno-fondo.jpg) center/cover;overflow:hidden;padding:8.5rem 0 5rem}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(251,246,238,.82) 0%,rgba(251,246,238,.55) 50%,rgba(251,246,238,0) 100%)}
   .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.35fr 1fr;gap:2rem;align-items:center}
   .hero h1 img{width:min(640px,100%)}
   .hero h1 img{height:auto}
   .tag{display:inline-block;margin-top:1.3rem;background:var(--metro);color:var(--noce);font:600 clamp(1.3rem,2.6vw,1.9rem)/1.1 var(--sans);padding:.35rem 1rem}
-  .hero p.sub{font-size:clamp(1.05rem,1.8vw,1.25rem);max-width:36ch;margin-top:1.3rem;color:#efe6d9}
+  .hero p.sub{font-size:clamp(1.05rem,1.8vw,1.25rem);max-width:36ch;margin-top:1.3rem;color:#3d2c1f}
   .cta{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2rem}
   .btn{display:inline-block;border:0;font-family:inherit;font-size:1rem;cursor:pointer;text-decoration:none;font-weight:600;padding:.85rem 1.4rem;border-radius:3px}
   .btn-metro{background:var(--metro);color:var(--noce)}
   .btn-metro:hover{background:#ffd73d}
-  .btn-line{border:1.5px solid rgba(255,255,255,.7)}
-  .btn-line:hover{background:rgba(255,255,255,.1)}
+  .btn-line{border:1.5px solid var(--noce);background:rgba(251,250,247,.6)}
+  .btn-line:hover{background:var(--bianco)}
   .mascotte{justify-self:center;width:min(380px,90%);height:auto;filter:drop-shadow(0 18px 24px rgba(0,0,0,.35))}
 
   .metro{position:absolute;left:0;right:0;bottom:0;height:42px;z-index:3;background:var(--metro);
@@ -273,7 +290,7 @@
   .banner-cookie p{font-size:.93rem}
   .banner-cookie .scelte{display:flex;gap:.7rem}
   .banner-cookie .btn{font-size:.95rem;padding:.7rem 1.3rem}
-  .btn-scuro{background:var(--telaio-scuro);color:var(--bianco)}
+  .btn-scuro{background:var(--noce);color:var(--bianco)}
   .btn-scuro:hover{background:var(--noce-2)}
   @media (max-width:640px){.banner-cookie{grid-template-columns:1fr}.banner-cookie .scelte .btn{flex:1}}
 
@@ -302,18 +319,16 @@
   .mappa iframe{width:100%;height:100%;min-height:392px;border:0;display:block}
 
   /* ---------- piè di pagina ---------- */
-  footer{background:var(--telaio-scuro);color:#d9cfc2;padding-block:3rem 2rem;font-size:.95rem}
+  footer{background:#E9DCC8;color:#3d2c1f;border-top:6px solid var(--metro);padding-block:3rem 2rem;font-size:.95rem}
   footer .grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:2.5rem;align-items:start}
   footer .grid img{width:220px;margin-bottom:.6rem}
-  footer .link-legali{display:flex;justify-content:center;flex-wrap:wrap;gap:.5rem 1.8rem;margin-top:1.1rem;font-size:.88rem;color:#efe4d4}
-  footer .legale{margin-top:2.5rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,.18);font-size:.85rem;color:#b6a999;display:flex;flex-wrap:wrap;gap:.4rem 1.4rem}
+  footer .link-legali{display:flex;justify-content:center;flex-wrap:wrap;gap:.5rem 1.8rem;margin-top:1.1rem;font-size:.88rem;color:var(--noce)}
+  footer .legale{margin-top:2.5rem;padding-top:1.2rem;border-top:1px solid rgba(90,60,30,.2);font-size:.85rem;color:#5c4d40;display:flex;flex-wrap:wrap;gap:.4rem 1.4rem}
 
   @media (max-width:900px){
-    nav ul{display:none;position:absolute;top:100%;right:0;flex-direction:column;gap:.2rem;background:var(--noce);padding:1rem 1.4rem;border-radius:4px}
-    nav ul.open{display:flex}
-    nav{position:relative}
-    .menu-btn{display:block}
-    .logo img{display:none}
+    nav{display:none}
+    .logo .testa{width:54px;height:54px}
+    .logo img{height:28px}
     .hero .wrap{grid-template-columns:1fr}
     .mascotte{width:200px;justify-self:start;order:-1}
     .armadi{flex-direction:column;align-items:center;gap:4rem;padding-inline:2.2rem}
@@ -323,6 +338,7 @@
     .chi .grid{gap:2.5rem}
     section{padding-block:4rem}
   }
+  @media (max-width:340px){.logo img{display:none}}
   @media (max-width:480px){
     .armadi{padding-inline:1.4rem}
     .corpo{padding:8px}
@@ -342,27 +358,41 @@
 <body>
 
 <header class="top">
-  <div class="wrap">
+  <div class="barra">
     <a class="logo" href="#">
       <span class="testa" aria-hidden="true"></span>
-      <img src="img/scritta-bianca.png" alt="Il Castoro S.r.l.">
+      <img src="img/scritta-nera.png" alt="Il Castoro S.r.l.">
     </a>
-    <nav aria-label="Menu principale">
-      <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
-      <ul id="menu">
-        <li><a href="#servizi">Servizi</a></li>
-        <li><a href="#chi-siamo">Chi siamo</a></li>
-        <li><a href="#contatti">Contatti</a></li>
-      </ul>
-    </nav>
+    <div class="destra">
+      <nav aria-label="Menu principale">
+        <ul>
+          <li><a href="#servizi">Servizi</a></li>
+          <li><a href="#chi-siamo">Chi siamo</a></li>
+          <li><a href="#contatti">Contatti</a></li>
+        </ul>
+      </nav>
+      <button class="burger" type="button" aria-label="Apri il menu" aria-expanded="false" aria-controls="pannello"><span></span><span></span><span></span></button>
+    </div>
   </div>
 </header>
+<div class="velo"></div>
+<aside class="pannello" id="pannello" aria-label="Menu">
+  <button class="chiudi-p" type="button" aria-label="Chiudi il menu">&times;</button>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#servizi">Servizi</a></li>
+    <li><a href="#chi-siamo">Chi siamo</a></li>
+    <li><a href="#contatti">Contatti e dove siamo</a></li>
+  </ul>
+  <button class="btn btn-metro" type="button" data-preventivo>Chiedi un preventivo</button>
+  <p class="rec"><a href="tel:+393296285002">329 628 5002</a><br><a href="mailto:ilcastorosrl@libero.it">ilcastorosrl@libero.it</a><br>Via Meluzza 58, Toscanella di Dozza (BO)</p>
+</aside>
 
 <main>
   <section class="hero" aria-label="Il Castoro S.r.l.">
     <div class="wrap">
       <div>
-        <h1><img src="img/scritta-bianca.png" alt="Il Castoro S.r.l." width="1000" height="162"><span class="tag">Falegnameria</span></h1>
+        <h1><img src="img/scritta-nera.png" alt="Il Castoro S.r.l." width="1000" height="162"><span class="tag">Falegnameria</span></h1>
         <p class="sub">Mobili su misura, arredamenti, scale e interni in legno. Il nostro laboratorio è a Toscanella di Dozza (Bologna) e lavoriamo in tutta l'Emilia-Romagna.</p>
         <div class="cta">
           <button class="btn btn-metro" type="button" data-preventivo>Chiedi un preventivo</button>
@@ -543,7 +573,7 @@
   <div class="wrap">
     <div class="grid">
       <div>
-        <img src="img/scritta-bianca.png" alt="Il Castoro S.r.l.">
+        <img src="img/scritta-nera.png" alt="Il Castoro S.r.l.">
         <p>Falegnameria a Toscanella di Dozza (BO)</p>
       </div>
       <div><p>Via Meluzza 58, Frazione Toscanella<br>40060 Dozza (BO)<br><a href="tel:+393296285002">329 628 5002</a><br><a href="mailto:ilcastorosrl@libero.it">ilcastorosrl@libero.it</a></p></div>
@@ -566,9 +596,17 @@
 
 <script>
   // menu su cellulare
-  const btn=document.querySelector('.menu-btn'),menu=document.getElementById('menu');
-  btn.addEventListener('click',()=>{const o=menu.classList.toggle('open');btn.setAttribute('aria-expanded',o)});
-  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');btn.setAttribute('aria-expanded',false)}));
+  const burger=document.querySelector('.burger'),pannello=document.getElementById('pannello'),velo=document.querySelector('.velo');
+  function menuAperto(o){
+    pannello.classList.toggle('aperto',o);velo.classList.toggle('attivo',o);
+    burger.setAttribute('aria-expanded',o);burger.setAttribute('aria-label',o?'Chiudi il menu':'Apri il menu');
+    if(o)pannello.querySelector('.chiudi-p').focus();
+  }
+  burger.addEventListener('click',()=>menuAperto(!pannello.classList.contains('aperto')));
+  pannello.querySelector('.chiudi-p').addEventListener('click',()=>{menuAperto(false);burger.focus()});
+  velo.addEventListener('click',()=>menuAperto(false));
+  pannello.querySelectorAll('a,[data-preventivo]').forEach(a=>a.addEventListener('click',()=>menuAperto(false)));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&pannello.classList.contains('aperto'))menuAperto(false)});
 
   // ante dell'armadio
   const vani=[...document.querySelectorAll('.vano')];
