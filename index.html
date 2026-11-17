@@ -127,7 +127,7 @@
   nav ul{list-style:none;display:flex;gap:.6rem}
   nav a{display:block;text-decoration:none;font-weight:600;font-size:1.12rem;padding:.6rem 1.1rem;border-radius:4px;background:rgba(251,250,247,.72);border:1.5px solid rgba(122,84,52,.25)}
   nav a:hover{background:var(--metro);border-color:var(--metro)}
-  .burger{width:54px;height:54px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;background:var(--noce);border:0;border-radius:6px;cursor:pointer}
+  .burger{width:54px;height:54px;display:none;flex-direction:column;justify-content:center;align-items:center;gap:6px;background:var(--noce);border:0;border-radius:6px;cursor:pointer}
   .burger span{display:block;width:26px;height:3px;border-radius:2px;background:var(--bianco);transition:transform .3s,opacity .3s}
   .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(9px) rotate(45deg)}
   .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
@@ -327,6 +327,7 @@
 
   @media (max-width:900px){
     nav{display:none}
+    .burger{display:flex}
     .logo .testa{width:54px;height:54px}
     .logo img{height:28px}
     .hero .wrap{grid-template-columns:1fr}
