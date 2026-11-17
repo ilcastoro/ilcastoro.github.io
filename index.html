@@ -327,14 +327,64 @@
   .galleria .vuota span{background:rgba(251,250,247,.85);padding:.4rem .8rem;font-weight:600;color:#6b5a4b}
   .lavori{background:#F4EEE4}
 
-  /* ---------- domande frequenti ---------- */
-  .faq{margin-top:2rem;max-width:860px}
-  .faq details{background:var(--bianco);border-left:6px solid var(--metro);margin-bottom:.7rem;box-shadow:0 2px 8px rgba(60,35,15,.06)}
-  .faq summary{cursor:pointer;list-style:none;padding:1.1rem 3rem 1.1rem 1.3rem;font:600 1.12rem var(--serif);position:relative}
-  .faq summary::-webkit-details-marker{display:none}
-  .faq summary::after{content:"+";position:absolute;right:1.2rem;top:50%;transform:translateY(-50%);font:600 1.6rem var(--sans);color:var(--telaio-scuro)}
-  .faq details[open] summary::after{content:"–"}
-  .faq details p{padding:0 1.3rem 1.2rem;max-width:68ch}
+  /* ---------- domande frequenti: la cassettiera ---------- */
+  .domande{background:#F4EEE4}
+  .cassettiera{margin:3rem auto 0;max-width:1120px}
+  .piano{height:30px;margin-inline:-18px;border-radius:4px 4px 2px 2px;background:#C29A6E url(img/legno-telaio.jpg) center/100% auto;
+    box-shadow:0 5px 0 #A57B52,0 10px 14px rgba(60,35,15,.18)}
+  .corpo-c{background:#C29A6E url(img/legno-telaio.jpg) center/cover;padding:14px 16px;display:flex;flex-direction:column;gap:12px;
+    box-shadow:inset 0 0 0 1px rgba(90,55,25,.25)}
+  .zoccolo-c{height:34px;margin-inline:8px;background:#C29A6E url(img/legno-telaio.jpg) center/100% auto;border-top:5px solid #A57B52}
+  .piedi-c{display:flex;justify-content:space-between;padding-inline:50px}
+  .piedi-c i{width:46px;height:16px;background:#A57B52;border-radius:0 0 8px 8px}
+
+  .cassetto{display:flex;flex-direction:column}
+  /* frontale del cassetto */
+  .frontale{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;gap:2rem;width:100%;min-height:104px;padding:1rem 1.5rem;
+    border:0;cursor:pointer;font:inherit;color:var(--noce);background:#E0C29A var(--tex) center/cover;border-radius:3px;
+    box-shadow:inset 0 0 0 2px rgba(90,55,25,.28),inset 3px 3px 0 rgba(255,240,215,.35),inset -3px -3px 0 rgba(90,55,25,.25),0 2px 0 rgba(90,55,25,.25);
+    transition:transform .55s cubic-bezier(.25,.8,.3,1),box-shadow .55s}
+  .frontale:hover{filter:brightness(1.04)}
+  .cassetto.aperto .frontale{transform:translateY(6px) scale(1.012);
+    box-shadow:inset 0 0 0 2px rgba(90,55,25,.28),inset 3px 3px 0 rgba(255,240,215,.35),inset -3px -3px 0 rgba(90,55,25,.25),0 16px 22px rgba(50,28,12,.35)}
+  /* portaetichetta in ottone con cartellino */
+  .targhetta{display:inline-block;padding:7px;border-radius:5px;max-width:min(680px,72%);
+    background:linear-gradient(160deg,#f3dc8e,#c99a3a 45%,#8f6a20 80%,#d9b45a);box-shadow:0 2px 3px rgba(50,28,12,.45),inset 0 1px 0 rgba(255,255,255,.6)}
+  .cartellino{display:block;background:#FBF6EA;padding:.55rem 1.1rem;font:600 clamp(1rem,1.7vw,1.22rem)/1.3 var(--serif);text-align:center;
+    box-shadow:inset 0 0 0 1px rgba(120,90,40,.25),inset 0 2px 4px rgba(0,0,0,.12)}
+  /* pomello in ottone */
+  .pomello{flex:none;width:38px;height:38px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,#fff6cf 0 8%,#e7c56a 22%,#b38425 60%,#7a5a17 100%);box-shadow:0 4px 6px rgba(50,28,12,.45),0 0 0 3px rgba(90,60,20,.25)}
+
+  /* interno del cassetto, rivelato all'apertura */
+  .vano-c{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s cubic-bezier(.25,.8,.3,1)}
+  .cassetto.aperto .vano-c{grid-template-rows:1fr}
+  .vano-c > .fondo-c{overflow:hidden;min-height:0}
+  .fondo-c{margin-inline:14px;background:#F0DFC2 url(img/legno-interno.jpg) center/cover;
+    box-shadow:inset 0 14px 18px -8px rgba(50,28,12,.45),inset 22px 0 18px -14px rgba(50,28,12,.35),inset -22px 0 18px -14px rgba(50,28,12,.35);
+    border-left:10px solid #CDAA7E;border-right:10px solid #CDAA7E;border-top:8px solid #B8916A}
+  .biglietto{margin:1.4rem auto 1.2rem;max-width:760px;background:#FFFDF6;padding:1.2rem 1.5rem;transform:rotate(-.6deg);
+    box-shadow:0 6px 12px rgba(50,28,12,.22);border-top:3px solid var(--metro);font-size:1.05rem;line-height:1.6}
+  .cassetto:nth-child(even) .biglietto{transform:rotate(.5deg)}
+
+  @media (max-width:640px){
+    .corpo-c{padding:10px;gap:10px}
+    .frontale{min-height:88px;padding:.8rem;gap:.8rem}
+    .targhetta{max-width:none;flex:1}
+    .cartellino{font-size:.98rem;padding:.5rem .7rem}
+    .pomello{width:30px;height:30px}
+    .fondo-c{margin-inline:8px;border-left-width:6px;border-right-width:6px}
+    .biglietto{margin:1rem .7rem;padding:1rem}
+    .piedi-c{padding-inline:24px}
+  }
+  @media (min-width:641px){
+    .pomello{display:none}
+    .frontale::before,.frontale::after{content:"";position:absolute;top:50%;width:40px;height:40px;margin-top:-20px;border-radius:50%;
+      background:radial-gradient(circle at 35% 30%,#fff6cf 0 8%,#e7c56a 22%,#b38425 60%,#7a5a17 100%);box-shadow:0 4px 6px rgba(50,28,12,.45),0 0 0 3px rgba(90,60,20,.25)}
+    .frontale::before{left:9%}
+    .frontale::after{right:9%}
+  }
+  @media (prefers-reduced-motion:reduce){.frontale,.vano-c{transition:none}}
 
   /* ---------- chi siamo ---------- */
   .chi{background:var(--salvia);color:var(--bianco)}
@@ -632,36 +682,81 @@
 
   <section id="domande" class="domande" aria-labelledby="t-faq">
     <div class="wrap">
-      <h2 id="t-faq">Domande frequenti</h2>
-      <div class="faq">
-        <details>
-          <summary>Dove si trova la falegnameria?</summary>
-          <p>Il nostro laboratorio è in Via Meluzza 58, a Toscanella di Dozza (BO), 40060.</p>
-        </details>
-        <details>
-          <summary>In quali zone lavorate?</summary>
-          <p>Lavoriamo in tutta l'Emilia-Romagna: Dozza, Imola, Castel San Pietro Terme, Bologna e provincia, e nel resto della regione.</p>
-        </details>
-        <details>
-          <summary>Quali lavori realizzate?</summary>
-          <p>Realizziamo arredamenti su misura, mobili su misura, scale in legno e interni in legno.</p>
-        </details>
-        <details>
-          <summary>Come posso chiedere un preventivo?</summary>
-          <p>Puoi compilare il modulo di richiesta preventivo sul sito, chiamarci al 329 628 5002, scriverci su WhatsApp negli orari di apertura oppure mandare una email a ilcastorosrl@libero.it.</p>
-        </details>
-        <details>
-          <summary>Quanto costa un mobile su misura?</summary>
-          <p>Ogni lavoro è fatto su misura, quindi il prezzo dipende da dimensioni, legno, finiture e complessità. Per questo prepariamo un preventivo dedicato a ogni richiesta.</p>
-        </details>
-        <details>
-          <summary>Quali sono gli orari?</summary>
-          <p>Siamo disponibili dalle 08:00 alle 12:00 e dalle 13:00 alle 17:00.</p>
-        </details>
-        <details>
-          <summary>Quanto tempo serve per realizzare un lavoro?</summary>
-          <p><span class="dc">Da completare: tempi indicativi di realizzazione.</span></p>
-        </details>
+      <div class="intro">
+        <div>
+          <h2 id="t-faq">Domande frequenti</h2>
+          <p class="lead">Ogni cassetto contiene una risposta: aprilo per leggerla.</p>
+        </div>
+      </div>
+      <div class="cassettiera">
+        <div class="piano"></div>
+        <div class="corpo-c">
+        <div class="cassetto" style="--tex:url(img/legno-cassetto-1.jpg)">
+          <div class="vano-c" id="r1" inert>
+            <div class="fondo-c"><div class="biglietto"><p>Il nostro laboratorio è in Via Meluzza 58, a Toscanella di Dozza (BO), 40060.</p></div></div>
+          </div>
+          <button class="frontale" type="button" aria-expanded="false" aria-controls="r1">
+            <span class="targhetta"><span class="cartellino">Dove si trova la falegnameria?</span></span>
+            <span class="pomello" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="cassetto" style="--tex:url(img/legno-cassetto-2.jpg)">
+          <div class="vano-c" id="r2" inert>
+            <div class="fondo-c"><div class="biglietto"><p>Lavoriamo in tutta l'Emilia-Romagna: Dozza, Imola, Castel San Pietro Terme, Bologna e provincia, e nel resto della regione.</p></div></div>
+          </div>
+          <button class="frontale" type="button" aria-expanded="false" aria-controls="r2">
+            <span class="targhetta"><span class="cartellino">In quali zone lavorate?</span></span>
+            <span class="pomello" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="cassetto" style="--tex:url(img/legno-cassetto-3.jpg)">
+          <div class="vano-c" id="r3" inert>
+            <div class="fondo-c"><div class="biglietto"><p>Realizziamo arredamenti su misura, mobili su misura, scale in legno e interni in legno.</p></div></div>
+          </div>
+          <button class="frontale" type="button" aria-expanded="false" aria-controls="r3">
+            <span class="targhetta"><span class="cartellino">Quali lavori realizzate?</span></span>
+            <span class="pomello" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="cassetto" style="--tex:url(img/legno-cassetto-4.jpg)">
+          <div class="vano-c" id="r4" inert>
+            <div class="fondo-c"><div class="biglietto"><p>Puoi compilare il modulo di richiesta preventivo sul sito, chiamarci al 329 628 5002, scriverci su WhatsApp negli orari di apertura oppure mandare una email a ilcastorosrl@libero.it.</p></div></div>
+          </div>
+          <button class="frontale" type="button" aria-expanded="false" aria-controls="r4">
+            <span class="targhetta"><span class="cartellino">Come posso chiedere un preventivo?</span></span>
+            <span class="pomello" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="cassetto" style="--tex:url(img/legno-cassetto-1.jpg)">
+          <div class="vano-c" id="r5" inert>
+            <div class="fondo-c"><div class="biglietto"><p>Ogni lavoro è fatto su misura, quindi il prezzo dipende da dimensioni, legno, finiture e complessità. Per questo prepariamo un preventivo dedicato a ogni richiesta.</p></div></div>
+          </div>
+          <button class="frontale" type="button" aria-expanded="false" aria-controls="r5">
+            <span class="targhetta"><span class="cartellino">Quanto costa un mobile su misura?</span></span>
+            <span class="pomello" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="cassetto" style="--tex:url(img/legno-cassetto-2.jpg)">
+          <div class="vano-c" id="r6" inert>
+            <div class="fondo-c"><div class="biglietto"><p>Siamo disponibili dalle 08:00 alle 12:00 e dalle 13:00 alle 17:00.</p></div></div>
+          </div>
+          <button class="frontale" type="button" aria-expanded="false" aria-controls="r6">
+            <span class="targhetta"><span class="cartellino">Quali sono gli orari?</span></span>
+            <span class="pomello" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="cassetto" style="--tex:url(img/legno-cassetto-3.jpg)">
+          <div class="vano-c" id="r7" inert>
+            <div class="fondo-c"><div class="biglietto"><p><span class="dc">Da completare: tempi indicativi di realizzazione.</span></p></div></div>
+          </div>
+          <button class="frontale" type="button" aria-expanded="false" aria-controls="r7">
+            <span class="targhetta"><span class="cartellino">Quanto tempo serve per realizzare un lavoro?</span></span>
+            <span class="pomello" aria-hidden="true"></span>
+          </button>
+        </div>
+        </div>
+        <div class="zoccolo-c"></div>
+        <div class="piedi-c" aria-hidden="true"><i></i><i></i></div>
       </div>
     </div>
   </section>
@@ -903,6 +998,11 @@
   }
   wa.addEventListener('click',e=>{if(wa.classList.contains('chiuso')){e.preventDefault();wa.classList.add('mostra');setTimeout(()=>wa.classList.remove('mostra'),2500)}});
   aggiornaWA(); setInterval(aggiornaWA,60000);
+  // cassettiera delle domande frequenti
+  document.querySelectorAll('.cassetto').forEach(c=>{
+    const b=c.querySelector('.frontale'),v=c.querySelector('.vano-c');
+    b.addEventListener('click',()=>{const o=!c.classList.contains('aperto');c.classList.toggle('aperto',o);b.setAttribute('aria-expanded',o);v.inert=!o});
+  });
 </script>
 </body>
 </html>
