@@ -149,9 +149,9 @@
   .hero{position:relative;min-height:88vh;display:flex;align-items:center;color:var(--noce);background:#E2C8A2 url(img/legno-fondo.jpg) center/cover;overflow:hidden;padding:8.5rem 0 5rem}
   .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(251,246,238,.82) 0%,rgba(251,246,238,.55) 50%,rgba(251,246,238,0) 100%)}
   .hero .wrap{position:relative;z-index:2;display:grid;grid-template-columns:1.35fr 1fr;gap:2rem;align-items:center}
-  .hero h1 img{width:min(640px,100%)}
+  .hero h1{font:800 clamp(2.4rem,5.4vw,4.4rem)/1.04 var(--serif);letter-spacing:-.015em;max-width:19ch;margin-top:1.1rem}
   .hero h1 img{height:auto}
-  .tag{display:inline-block;margin-top:1.3rem;background:var(--metro);color:var(--noce);font:600 clamp(1.3rem,2.6vw,1.9rem)/1.1 var(--sans);padding:.35rem 1rem}
+  .tag{display:inline-block;background:var(--metro);color:var(--noce);font:600 clamp(1rem,1.6vw,1.2rem)/1.1 var(--sans);padding:.45rem .9rem}
   .hero p.sub{font-size:clamp(1.05rem,1.8vw,1.25rem);max-width:36ch;margin-top:1.3rem;color:#3d2c1f}
   .cta{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2rem}
   .btn{display:inline-block;border:0;font-family:inherit;font-size:1rem;cursor:pointer;text-decoration:none;font-weight:600;padding:.85rem 1.4rem;border-radius:3px}
@@ -392,8 +392,9 @@
   <section class="hero" aria-label="Il Castoro S.r.l.">
     <div class="wrap">
       <div>
-        <h1><img src="img/scritta-nera.png" alt="Il Castoro S.r.l." width="1000" height="162"><span class="tag">Falegnameria</span></h1>
-        <p class="sub">Mobili su misura, arredamenti, scale e interni in legno. Il nostro laboratorio è a Toscanella di Dozza (Bologna) e lavoriamo in tutta l'Emilia-Romagna.</p>
+        <span class="tag">Falegnameria a Dozza (BO)</span>
+        <h1>Mobili su misura, arredamenti, scale e interni in legno</h1>
+        <p class="sub">Il nostro laboratorio è a Toscanella di Dozza, in provincia di Bologna, e lavoriamo in tutta l'Emilia-Romagna.</p>
         <div class="cta">
           <button class="btn btn-metro" type="button" data-preventivo>Chiedi un preventivo</button>
           <a class="btn btn-line" href="#servizi">Apri l'armadio dei servizi</a>
