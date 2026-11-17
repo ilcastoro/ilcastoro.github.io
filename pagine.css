@@ -43,7 +43,7 @@ th{background:#f1e8da;font-weight:600}
 .servizio nav{display:flex;gap:.5rem}
 .servizio nav a{font-weight:600;text-decoration:none;padding:.55rem 1rem;border-radius:4px;background:rgba(251,250,247,.75);border:1.5px solid rgba(122,84,52,.25)}
 .servizio nav a:hover{background:var(--metro)}
-.apertura{background:linear-gradient(90deg,rgba(251,246,238,.9),rgba(251,246,238,.6)),url(img/legno-fondo.jpg) center/cover;padding:3rem 0 3.5rem}
+.apertura{background:#E2C8A2 url(img/legno-fondo.jpg) center/cover;padding:3rem 0 3.5rem}
 .briciole{font-size:.9rem;color:#6b5a4b;margin-bottom:1.2rem}
 .tag{display:inline-block;background:var(--metro);font:600 1rem "Work Sans",sans-serif;padding:.4rem .8rem}
 .apertura h1{font:800 clamp(2.2rem,5vw,3.8rem)/1.05 "Bitter",Georgia,serif;margin-top:1rem;max-width:18ch}
